@@ -251,6 +251,13 @@ contract EchidnaTemplate {
     // Test for associative property
     // (x + y) + z == x + (y + z)
     function add_test_associative(int128 x, int128 y, int128 z) public {
+        int128 x_y = add(x, y);
+        int128 xy_z = add(x_y, z);
+
+        int128 y_z = add(y,z);
+        int128 x_yz = add(x, y_z);
+
+        assert(xy_z == x_yz);
     }
 
 
@@ -266,6 +273,12 @@ contract EchidnaTemplate {
 
     // Test (x + y) - y == x
     function add_sub_inverse_operations(int128 x, int128 y) public {
+        // removed +1 in add in abdk maths library
+        emit Debug(x, y);
+        int128 x_y = add(x, y);
+        int128 xy_y = sub(x_y, y);
+        emit Debug(x_y, xy_y);
+        assert(xy_y == x);
     }
 
 
@@ -286,5 +299,19 @@ contract EchidnaTemplate {
     // Test that division is not commutative
     // (x / y) != (y / x)
     function div_test_not_commutative(int128 x, int128 y) public {
+        // Pre Conditions
+        // require(abs(x) != abs(y));
+        emit Debug(x, y);
+        // Action
+        int128 x_y = div(x, y);
+        int128 y_x = div(y, x);
+        emit Debug(x_y, y_x);
+        // Post conditions
+        if(abs(x) == abs(y)){
+            assert(x_y == y_x);
+        }
+        else{
+            assert(x_y != y_x);
+        }
     }
 }
