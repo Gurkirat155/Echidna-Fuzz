@@ -9,3 +9,5 @@ Echidina caller  == msg.sender
 echidna testToken.sol --test-mode assertion --- For testing in assertion mode
 
 echidna Template.sol --contract EchidnaTemplate --config config.yaml
+
+Use coverage report which is most impoortnt thing 
