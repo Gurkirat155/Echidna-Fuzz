@@ -1,6 +1,6 @@
 **/crytic-export/*
 **/node_modules/*
-**/corpus/*
+# **/corpus/*
 **/.DS_Store
 **/types/* 
 **/typechain/*
