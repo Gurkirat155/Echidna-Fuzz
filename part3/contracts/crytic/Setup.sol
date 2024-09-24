@@ -34,10 +34,10 @@ contract Setup {
 
 
     constructor() public{
-        testErcContract1 = new UniswapV2ERC20();
-        testErcContract2 = new UniswapV2ERC20();
+        testToken1 = new UniswapV2ERC20();
+        testToken2 = new UniswapV2ERC20();
         factoryContract = new UniswapV2Factory(address(this));
-        factoryContract.createPair(address (testErcContract1), address (testErcContract2));
+        factoryContract.createPair(address (testToken1), address (testToken2));
         // This will be called by fatctory below contract
         pairContract = new UniswapV2Pair();
         // routerContract = new UniswapV2Router01(address(factoryContract), weth address); 
