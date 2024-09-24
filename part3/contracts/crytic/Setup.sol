@@ -18,28 +18,28 @@ contract Users {
 contract Setup {
 
     UniswapV2Pair pairContract;
-    UniswapV2ERC20 testToken1;
-    UniswapV2ERC20 testToken2;
-    // UniswapV2ERC20 testErcContract1;
-    // UniswapV2ERC20 testErcContract2;
+    // UniswapV2ERC20 testToken1;
+    // UniswapV2ERC20 testToken2;
+    UniswapV2ERC20 testErcContract1;
+    UniswapV2ERC20 testErcContract2;
     UniswapV2Factory factoryContract;
     // UniswapV2Router01 routerContract;
 
     Users user;
-    bool completed;
-    // bool mintCompleted;
+    // bool completed;
+    bool mintCompleted;
 
 
 
 
 
     constructor() public{
-        testToken1 = new UniswapV2ERC20();
-        testToken2 = new UniswapV2ERC20();
+        testErcContract1 = new UniswapV2ERC20();
+        testErcContract2 = new UniswapV2ERC20();
         factoryContract = new UniswapV2Factory(address(this));
-        factoryContract.createPair(address (testToken1), address (testToken2));
+        // factoryContract.createPair(address(testErcContract1), address(testErcContract1));
         // This will be called by fatctory below contract
-        pairContract = new UniswapV2Pair();
+        pairContract = UniswapV2Pair(factoryContract.createPair(address(testErcContract1), address(testErcContract2)));
         // routerContract = new UniswapV2Router01(address(factoryContract), weth address); 
 
         user = new Users();
@@ -48,25 +48,25 @@ contract Setup {
 
     // Helper functions
 
-    // function _mintTokens(uint amount1, uint amount2) internal{
-    //     // pairContract.mint()
-    //     testErcContract1.mint(address(user), amount1);
-    //     testErcContract2.mint(address(user), amount2);
-    //     mintCompleted = true;
-    // }
-
-    // function _between(uint value, uint low, uint high) internal pure returns(uint) {
-    //     return low + (value % (high-low +1)); 
-    // }
-
-    function _init(uint amount1, uint amount2) internal {
-        testToken1.mint(address(user), amount1);
-        testToken2.mint(address(user), amount2);
-        completed = true;
+    function _mintTokens(uint amount1, uint amount2) internal{
+        // pairContract.mint()
+        testErcContract1.mint(address(user), amount1);
+        testErcContract2.mint(address(user), amount2);
+        mintCompleted = true;
     }
 
-
-    function _between(uint val, uint low, uint high) internal pure returns(uint) {
-        return low + (val % (high-low +1)); 
+    function _between(uint value, uint low, uint high) internal pure returns(uint) {
+        return low + (value % (high-low +1)); 
     }
+
+    // function _init(uint amount1, uint amount2) internal {
+    //     testToken1.mint(address(user), amount1);
+    //     testToken2.mint(address(user), amount2);
+    //     completed = true;
+    // }
+
+
+    // function _between(uint val, uint low, uint high) internal pure returns(uint) {
+    //     return low + (val % (high-low +1)); 
+    // }
 }
